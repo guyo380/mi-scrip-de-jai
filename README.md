@@ -1,14 +1,15 @@
-```lua
-local function robar()
-    game:GetService("RunService").Stepped:Connect(function()
-        if #workspace:GetChildren() > 500 then  -- Límite de objetos
-            for _, obj in ipairs(workspace:GetChildren()) do
-                if obj.Name == "brainrot" and obj.Transparency == 1 and not obj.Anchored then
-                    obj:Destroy()  -- Elimina el objeto sospechoso
-                end
-            end
+-- FPS Killer: Reduce los FPS de jugadores objetivo a 3 FPS
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local function setLowFPS(targetPlayer)
+    if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
+        local humanoid = targetPlayer.Character.Humanoid
+        -- Bucle que fuerza actualizaciones de frames a 3 FPS
+        while humanoid.Parent do
+            RunService.RenderStepped:Wait()
+            humanoid.WalkSpeed = 0  -- Detener movimiento para simular bajo FPS
+            wait(1/3)  -- 3 actualizaciones por segundo
         end
-    end)
+    end
 end
-robar()
-```
