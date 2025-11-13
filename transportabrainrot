@@ -1,0 +1,24 @@
+-- Teletransporta tu Brainrot a tu base en Steal a Brainrot
+-- Asegúrate de reemplazar 'TuBase' con el nombre exacto de tu base
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TeleportEvent = ReplicatedStorage:FindFirstChild("TeleportToBase") or ReplicatedStorage:FindFirstChild("TPToBase")
+
+if not TeleportEvent then
+    error("No se encontró el evento de teletransporte. El script puede no ser compatible con esta versión del juego.")
+end
+
+local function teleportToBase()
+    if LocalPlayer and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        -- Envía la solicitud de teletransporte al servidor
+        TeleportEvent:FireServer()
+        print("Teletransportando Brainrot a tu base...")
+    else
+        warn("No se pudo teletransportar: el personaje no está cargado correctamente.")
+    end
+end
+
+-- Ejecuta el teletransporte inmediatamente
+teleportToBase()
